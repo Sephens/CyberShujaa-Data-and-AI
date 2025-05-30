@@ -10,11 +10,11 @@ table = soup.find('table', class_='table')
 
 headers = [th.text.strip() for th in table.find_all('th')]
 print("\nColumn Headers:", headers)
+
 # create a DataFrame
 df = pd.DataFrame(columns=headers)
 
 # extract rows
-rows = table.find_all('tr')[1:5]
 
 for row in table.find_all('tr')[1:5]:  # Just first 5 rows for
     cells = [td.text.strip() for td in row.find_all('td')]
@@ -25,3 +25,5 @@ print(df.head())
 
 #save to excel
 df.to_excel('text.xlsx', index=False)
+
+df.to_json('test.json')
