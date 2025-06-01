@@ -96,7 +96,7 @@ This assignment focuses on **data wrangling** the **Netflix Movies and TV Shows 
 - The cleaned dataset is now ready for **exploratory analysis** or **machine learning**.  
 
 ### **Link to Kaggle Notebook:**  
-🔗 [Insert Public Kaggle Notebook Link Here]  
+🔗 [[Kaggle Notebook Link](https://www.kaggle.com/code/sephensb/netflix-data-wrangling)]  
 
 ### **Screenshots (Attached in PDF Submission):**  
 1. Initial data exploration (`df.info()`, missing values).  
