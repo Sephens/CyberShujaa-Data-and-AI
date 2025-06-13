@@ -34,6 +34,8 @@ To establish a robust analytical foundation, I systematically imported five crit
 - `fact_bookings`: Granular reservation records with stay details  
 - `fact_aggregated_bookings`: Pre-consolidated metrics for performance benchmarking  
 
+![transform1](/BI/screenshots/transform1.png)
+
 #### Data Transformation:  
 I then selected the “Transform Data” option. This opened a Power Query Editor window where I was able to do the following:  
 1. In the `dim_hotels`, I managed to change the cities from Indian to Kenyan  
@@ -44,8 +46,14 @@ I then selected the “Transform Data” option. This opened a Power Query Edito
 6. Verified data type consistency in "Schema View"  
 7. Documented all steps in Power Query's "Applied Steps" pane  
 
-![Power Query Transformations](https://via.placeholder.com/600x300?text=Data+Transformation+Process)  
-*Figure 1: Data cleaning and transformation in Power Query Editor*
+![Power Query Transformations](/BI/screenshots/transform4.png)  
+*Figure 2: Data cleaning and transformation in Power Query Editor*
+
+![Power Query Transformations](/BI/screenshots/transform3.png)
+*Figure 3: Data cleaning and transformation in Power Query Editor* 
+
+![Power Query Transformations](/BI/screenshots/transform5.png) 
+*Figure 4: Data cleaning and transformation in Power Query Editor*
 
 ---
 
