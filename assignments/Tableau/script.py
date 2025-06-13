@@ -6,7 +6,7 @@ import random
 
 # Initialize Faker
 fake = Faker('en_US')
-Faker.seed(42)
+fake.seed(42)
 np.random.seed(42)
 random.seed(42)
 
