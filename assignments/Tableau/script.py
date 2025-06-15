@@ -15,17 +15,17 @@ num_records = 8950
 
 # States & Cities
 states_cities = {
-    'New York': ['New York City', 'Buffalo', 'Rochester'],
-    'Virginia': ['Virginia Beach', 'Norfolk', 'Richmond'],
-    'Florida': ['Miami', 'Orlando', 'Tampa'],
-    'Illinois': ['Chicago', 'Aurora', 'Naperville'],
-    'Pennsylvania': ['Philadelphia', 'Pittsburgh', 'Allentown'],
-    'Ohio': ['Columbus', 'Cleveland', 'Cincinnati'],
-    'North Carolina': ['Charlotte', 'Raleigh', 'Greensboro'],
-    'Michigan': ['Detroit', 'Grand Rapids', 'Warren']
+    'Nairobi': ['Nairobi', 'Kasarani', 'Ruaraka', 'Embakasi', 'Dagoreti', ],
+    'Kisumu': ['Kisumu', 'Milimani', 'Kondele', 'Nyalenda', 'Maseno'],
+    'Mombasa': ['Mombasa', 'Likoni', 'Kisauni', 'Nyali', 'Changamwe'],
+    'Bungoma': ['Bungoma', 'Webuye', 'Kimilili', 'Chwele', 'Naitiri'],
+    'Nakuru': ['Nakuru', 'Naivasha', 'Molo', 'Njoro', 'Gilgil'],
+    'Kiambu': ['Thika', 'Kiambu', 'Ruiru', 'Kikuyu', 'Limuru'],
+    'Uasin Gishu': ['Eldoret', 'Kesses', 'Moiben', 'Soy', 'Turbo'],
+    'Kakamega': ['Kakamega', 'Malava', 'Mumias', 'Butere', 'Shinyalu']
 }
 states = list(states_cities.keys())
-state_prob = [0.7, 0.02, 0.01, 0.03, 0.05, 0.03, 0.05, 0.11]
+state_prob = [0.4, 0.15, 0.1, 0.1, 0.08, 0.07, 0.05, 0.05]
 assigned_states = np.random.choice(states, size=num_records, p=state_prob)
 assigned_cities = [np.random.choice(states_cities[state]) for state in assigned_states]
 
