@@ -1,8 +1,0 @@
-Connolly and Begg (2005), Database Systems: A Practical Approach to Design, Implementation and Management (International Computer Science Series) 4th edition, Addison Wesley
-
-Elmasri, R and Navathe, S (2010), Fundamentals of Database Systems.  CHAPTER 6
-
-Date, C.J (2005) Databases in Depth, O’Reilly. 
-Dietrich, Suzanne (2001) Understanding Database Query Languages Prentice Hall
-
-Elmasri, R and Navathe, S (2010), Fundamentals of Database Systems. CHAPTER 10
