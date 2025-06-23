@@ -25,6 +25,7 @@ states_cities = {
     'Kakamega': ['Kakamega', 'Malava', 'Mumias', 'Butere', 'Shinyalu']
 }
 states = list(states_cities.keys())
+# The probability of city selection e.g Nairobi has a 40% chance and kisumu has 15%
 state_prob = [0.4, 0.15, 0.1, 0.1, 0.08, 0.07, 0.05, 0.05]
 assigned_states = np.random.choice(states, size=num_records, p=state_prob)
 assigned_cities = [np.random.choice(states_cities[state]) for state in assigned_states]
