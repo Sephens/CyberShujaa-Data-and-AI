@@ -1,19 +1,19 @@
-import pandas as pd
-import numpy as np
-from faker import Faker
-from datetime import datetime, timedelta
-import random
+import pandas as pd # For data manipulation and DataFrames
+import numpy as np # For numerical operations and random number generation
+from faker import Faker # For generating fake personal data
+from datetime import datetime, timedelta # For date handling
+import random # For random number generation
 
-# Initialize Faker
-fake = Faker('en_US')
-fake.seed(42)
-np.random.seed(42)
-random.seed(42)
+# Initialize Faker with Kenyan locale and set seeds for reproducibility
+fake = Faker('en_KE') # KE-style fake data
+fake.seed(42) # Seed for Faker
+np.random.seed(42) # Seed for NumPy random
+random.seed(42)  # Seed for Python random
 
-# Configuration
+# Configuration - number of employee records to generate
 num_records = 8950
 
-# States & Cities
+# Define Kenyan counties and their major cities/towns
 states_cities = {
     'Nairobi': ['Nairobi', 'Kasarani', 'Ruaraka', 'Embakasi', 'Dagoreti', ],
     'Kisumu': ['Kisumu', 'Milimani', 'Kondele', 'Nyalenda', 'Maseno'],
@@ -24,15 +24,23 @@ states_cities = {
     'Uasin Gishu': ['Eldoret', 'Kesses', 'Moiben', 'Soy', 'Turbo'],
     'Kakamega': ['Kakamega', 'Malava', 'Mumias', 'Butere', 'Shinyalu']
 }
+# Get list of counties
 states = list(states_cities.keys())
-# The probability of city selection e.g Nairobi has a 40% chance and kisumu has 15%
+
+# Probability distribution for county selection (Nairobi has highest probability)
 state_prob = [0.4, 0.15, 0.1, 0.1, 0.08, 0.07, 0.05, 0.05]
+
+# Assign counties to employees based on probability distribution
 assigned_states = np.random.choice(states, size=num_records, p=state_prob)
+
+# For each county assigned, randomly select a city within that county
 assigned_cities = [np.random.choice(states_cities[state]) for state in assigned_states]
 
-# Departments & Jobtitles
+# Define company departments and their probability distribution
 departments = ['HR', 'IT', 'Sales', 'Marketing', 'Finance', 'Operations', 'Customer Service']
-departments_prob = [0.02, 0.15, 0.21, 0.08, 0.05, 0.30, 0.19]
+departments_prob = [0.02, 0.15, 0.21, 0.08, 0.05, 0.30, 0.19] # Operations is largest department
+
+# Define job titles for each department
 jobtitles = {
     'HR': ['HR Manager', 'HR Coordinator', 'Recruiter', 'HR Assistant'],
     'IT': ['IT Manager', 'Software Developer', 'System Administrator', 'IT Support Specialist'],
@@ -42,6 +50,8 @@ jobtitles = {
     'Operations': ['Operations Manager', 'Operations Analyst', 'Logistics Coordinator', 'Inventory Specialist'],
     'Customer Service': ['Customer Service Manager', 'Customer Service Representative', 'Support Specialist', 'Help Desk Technician']
 }
+
+# Probability distribution for job titles within each department
 jobtitles_prob = {
     'HR': [0.03, 0.3, 0.47, 0.2],  # HR Manager, HR Coordinator, Recruiter, HR Assistant
     'IT': [0.02, 0.47, 0.2, 0.31],  # IT Manager, Software Developer, System Administrator, IT Support Specialist
@@ -52,9 +62,10 @@ jobtitles_prob = {
     'Customer Service': [0.04, 0.3, 0.38, 0.28]  # Customer Service Manager, Customer Service Representative, Support Specialist, Help Desk Technician
 }
 
-# Educations
+# Define education levels
 educations = ['High School', "Bachelor", "Master", 'PhD']
 
+# Define required education levels for each job title
 education_mapping = {
     'HR Manager': ["Master", "PhD"],
     'HR Coordinator': ["Bachelor", "Master"],
@@ -87,8 +98,7 @@ education_mapping = {
     'Help Desk Technician': ["High School", "Bachelor"]
 }
 
-# Hiring Date
-# Define custom probability weights for each year
+# Define hiring date distribution by year weights
 year_weights = {
     2015: 5,   # 15% probability
     2016: 8,   # 15% probability
@@ -103,14 +113,19 @@ year_weights = {
 }
 
 
-# Generate a random date based on custom probabilities
+# Function to generate random dates weighted by year distribution
 def generate_custom_date(year_weights):
+    # Select year based on weights
     year = random.choices(list(year_weights.keys()), weights=list(year_weights.values()))[0]
     month = random.randint(1, 12)
     day = random.randint(1, 28)  # Assuming all months have 28 days for simplicity
+
+    # Generate random date within selected year
     return fake.date_time_between(start_date=datetime(year, 1, 1), end_date=datetime(year, 12, 31))
 
+# Function to generate base salaries by department and job title
 def generate_salary(department, job_title):
+     # Salary ranges for each position
     salary_dict = {
             'HR': {
                 'HR Manager': np.random.randint(60000, 90000),
@@ -157,25 +172,40 @@ def generate_salary(department, job_title):
         }
     return salary_dict[department][job_title]
 
-# Generate the dataset
+# Initialize empty list to store employee records
 data = []
 
+# Generate each employee record
 for _ in range(num_records):
+    # Generate employee ID
     employee_id = f"00-{random.randint(10000000, 99999999)}"
+
+     # Generate personal details
     first_name = fake.first_name()
     last_name = fake.last_name()
-    gender = np.random.choice(['Female', 'Male'], p=[0.46, 0.54])
+    gender = np.random.choice(['Female', 'Male'], p=[0.46, 0.54]) # 46% female, 54% male
+
+     # Generate location details
     state = np.random.choice(states, p=state_prob)
     city = np.random.choice(states_cities[state])
+
+    # Generate employment details
     hiredate = generate_custom_date(year_weights)
       #termdate
     department = np.random.choice(departments, p=departments_prob)
     job_title  = np.random.choice(jobtitles[department], p=jobtitles_prob[department])
+
+     # Generate education and performance details
     education_level = np.random.choice(education_mapping[job_title])
     performance_rating = np.random.choice(['Excellent', 'Good', 'Satisfactory', 'Needs Improvement'], p=[0.12, 0.5, 0.3, 0.08])
-    overtime = np.random.choice(['Yes', 'No'], p=[0.3, 0.7])
+
+    # Generate overtime status
+    overtime = np.random.choice(['Yes', 'No'], p=[0.3, 0.7]) # 30% work overtime
+
+    # Generate base salary
     salary = generate_salary(department, job_title)
 
+# Add all fields to employee record
     data.append([
         employee_id,
         first_name,
@@ -192,7 +222,7 @@ for _ in range(num_records):
         overtime
     ])
 
-## Create DataFrame
+# Define column names for DataFrame
 columns = [
      'employee_id',
      'first_name',
@@ -209,22 +239,24 @@ columns = [
      'overtime'
     ]
 
-
+# Create DataFrame from generated data
 df = pd.DataFrame(data, columns=columns)
 
-# Add Birthdate
+# Function to generate birthdates with realistic age distributions
 def generate_birthdate(row):
+    # Age group distribution
     age_distribution = {
-        'under_25': 0.11,
-        '25_34': 0.25,
-        '35_44': 0.31,
-        '45_54': 0.24,
-        'over_55': 0.09
+        'under_25': 0.11,  # 11%
+        '25_34': 0.25,     # 25%
+        '35_44': 0.31,     # 31%
+        '45_54': 0.24,     # 24%
+        'over_55': 0.09    # 9%
     }
     age_groups = list(age_distribution.keys())
     age_probs = list(age_distribution.values())
     age_group = np.random.choice(age_groups, p=age_probs)
 
+# Managers and highly educated employees tend to be older
     if any('Manager' in title for title in row['job_title']):
         age = np.random.randint(30, 65)
     elif row['education_level'] == 'PhD':
@@ -240,6 +272,7 @@ def generate_birthdate(row):
     else:
         age = np.random.randint(56, 65)
 
+ # Generate birthdate based on calculated age
     birthdate = fake.date_of_birth(minimum_age=age, maximum_age=age)
     return birthdate
 
@@ -247,7 +280,7 @@ def generate_birthdate(row):
 df['birthdate'] = df.apply(generate_birthdate, axis=1)
 
 # Terminations
-# Define termination distribution
+# Configure termination distribution by year
 year_weights = {
     2015: 5,
     2016: 7,
@@ -261,7 +294,7 @@ year_weights = {
     2024: 10
 }
 
-# Calculate the total number of terminated employees
+# Calculate total terminations (11.2% attrition rate)
 total_employees = num_records
 termination_percentage = 0.112  # 11.2%
 total_terminated = int(total_employees * termination_percentage)
@@ -287,6 +320,7 @@ df['termdate'] = df['termdate'].where(df['termdate'].notnull(), None)
 # Ensure termdate is at least 6 months after hiredat
 df['termdate'] = df.apply(lambda row: row['hiredate'] + timedelta(days=180) if row['termdate'] and row['termdate'] < row['hiredate'] + timedelta(days=180) else row['termdate'], axis=1)
 
+# Define salary multipliers based on education and gender
 education_multiplier = {
     'High School': {'Male': 1.03, 'Female': 1.0},
     "Bachelor": {'Male': 1.115, 'Female': 1.0},
