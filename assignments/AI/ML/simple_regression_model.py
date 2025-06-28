@@ -99,6 +99,6 @@ results = pd.DataFrame({
 })
 
 # Save to new CSV
-results.to_csv('dataset/predictions.csv', index=False)
+results.to_csv('dataset/areas_price_predictions.csv', index=False)
 
 

@@ -303,3 +303,121 @@ Through this project, I learned:
 The model achieved an **R² score of [X]**, indicating **[good/moderate/poor] fit**. Future improvements could include feature engineering or trying different regression models.  
 
 ---
+---
+
+# House Price Prediction Project
+
+This project implements a **Multiple Linear Regression** model to predict house prices based on features like area, bedrooms, and age. Below is a detailed explanation of the code and its components.
+
+
+
+## Project Overview
+This predictive model:
+- Uses historical house price data
+- Handles missing values intelligently
+- Trains a linear regression model
+- Generates price predictions for new properties
+- Exports results in a clean CSV format
+
+## Code Explanation
+
+### 1. Import Libraries
+```python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+```
+- **Pandas/Numpy**: Data manipulation and numerical operations
+- **Matplotlib**: Data visualization
+- **Scikit-learn**: Machine learning components (models, metrics, utilities)
+
+### 2. Data Loading & Exploration
+```python
+data = pd.read_csv('dataset/homeprices-m.csv')
+print("First 5 rows:\n", data.head())
+print("\nDataset statistics:\n", data.describe())
+print("\nMissing values:\n", data.isnull().sum())
+```
+- Loads the training dataset from CSV
+- Shows sample data, statistical summary, and missing value count
+- Helps understand data distribution and quality
+
+### 3. Data Preprocessing
+```python
+median = data.bedrooms.median()
+data.bedrooms = data.bedrooms.fillna(median)
+```
+- Calculates median bedrooms value
+- Fills missing bedroom values with the median (robust to outliers)
+- Ensures complete data for model training
+
+### 4. Feature-Target Separation
+```python
+X = data.drop('price', axis='columns')
+y = data['price']
+```
+- **X**: Contains all features (area, bedrooms, age)
+- **y**: Contains target variable (price)
+- Prepares data for supervised learning
+
+### 5. Model Training
+```python
+model = LinearRegression()
+model.fit(X_train, y_train)
+print("Coefficients:", model.coef_)
+print("Intercept:", model.intercept_)
+```
+- Initializes Linear Regression model
+- Trains model on all available data (no test split)
+- Outputs learned coefficients and intercept
+  - Coefficients show each feature's impact on price
+  - Intercept represents base price when all features are zero
+
+### 6. Prediction Pipeline
+```python
+test_data = pd.read_csv('dataset/homeprices-test.csv')
+predictions = model.predict(test_data)
+```
+- Loads new property data for prediction
+- Generates price estimates using trained model
+
+### 7. Results Formatting & Export
+```python
+results = pd.DataFrame({
+    'Area (sq ft)': test_data['area'],
+    'Bedrooms': test_data['bedrooms'],
+    'Age (years)': test_data['age'],
+    'Predicted Price (Ksh)': predictions.round().astype(int)
+})
+results.to_csv('dataset/price_predictions_m.csv', index=False)
+```
+- Creates clean results dataframe
+- Rounds prices to whole Kenyan Shillings
+- Exports to CSV without row indices
+
+## Data Preparation
+The model expects input data with these columns:
+1. `area`: Property size in square feet
+2. `bedrooms`: Number of bedrooms
+3. `age`: Property age in years
+
+## Model Training
+- Algorithm: Ordinary Least Squares (OLS) Regression
+- Trained on all available data (no holdout set)
+- Outputs linear equation:  
+  `Price = (area_coef × area) + (bedrooms_coef × bedrooms) + (age_coef × age) + intercept`
+
+## Prediction & Results
+Example output CSV:
+
+| Area (sq ft) | Bedrooms | Age (years) | Predicted Price (Ksh) |
+|--------------|----------|-------------|-----------------------|
+| 2500         | 3        | 10          | 4,231,456            |
+| 3200         | 4        | 5           | 5,123,789            |
+
+

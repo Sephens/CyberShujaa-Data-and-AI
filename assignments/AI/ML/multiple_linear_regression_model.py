@@ -31,6 +31,19 @@ model.fit(X_train, y_train)
 print("Coefficients:", model.coef_)  # Slopes (b1, b2, ...)
 print("Intercept:", model.intercept_)  # Bias (b0)
 
-prediction = model.predict([[4000, 4, 24]])
-print(prediction)
+
+test_data = pd.read_csv('dataset/homeprices-test.csv')
+
+# Make predictions
+predictions = model.predict(test_data)
+
+results = pd.DataFrame({
+    'Area (sq ft)': test_data['area'],
+    'Bedrooms': test_data['bedrooms'],
+    'Age (years)': test_data['age'],
+    'Predicted Price (Ksh)': predictions.round().astype(int)  # Remove decimals
+})
+
+# Save results
+results.to_csv('dataset/price_predictions_m.csv', index=False)
 
