@@ -147,5 +147,5 @@ This Power BI project showcases how **data-driven decision-making** can transfor
 
 ## 📎 Link to Project File
 
-[GitHub: Deep Revenue Insights in Hospitality (PBIX)](https://github.com/Sephens/CyberShujaa-Data-and-AI/blob/master/assignments%2FBI%2FDeep%20Revenue%20Insights%20in%20Hospitality.pbix)
+[GitHub: Deep Revenue Insights in Hospitality (PBIX)](https://github.com/Sephens/CyberShujaa-Data-and-AI/blob/master/Projects/BI/powerbi/Deep%20Revenue%20Insights%20in%20Hospitality.pbix)
 
