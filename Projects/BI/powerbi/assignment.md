@@ -1,15 +1,4 @@
 
-# Data and Artificial Intelligence  
-**Cyber Shujaa Program**  
-
-## Week 3 Assignment  
-**Business Intelligence on Power BI**  
-
-**Student Name:** Steven Odhiambo  
-**Student ID:** CS-DA01-25055  
-
----
-
 ## Introduction  
 This assignment leverages Power BI to analyze hotel business data, transforming raw datasets (dim_date, dim_rooms, fact_bookings) into actionable insights. Business Intelligence (BI) enables data-driven decision-making by processing, modeling, and visualizing information. Power BI, a leading BI tool, integrates data from multiple sources, builds semantic models, and creates interactive dashboards. The solution follows a star schema for efficient analytics, implements DAX measures for KPIs like occupancy and revenue, and delivers user-friendly visualizations. Key benefits include optimized pricing, operational efficiency, and enhanced guest experiences. The project covers data preparation, modeling, dashboard design, and deployment, demonstrating BI's value in hospitality management through descriptive, diagnostic, and predictive analytics.
 
