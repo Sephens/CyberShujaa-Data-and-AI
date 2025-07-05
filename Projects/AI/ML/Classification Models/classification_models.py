@@ -10,7 +10,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.naive_bayes import GaussianNB
+from sklearn.naive_bayes import GaussianNB, MultinomialNB, BernoulliNB
 from sklearn.svm import SVC
 from sklearn.preprocessing import StandardScaler  # <-- ADDED FOR SCALING
 
@@ -33,7 +33,7 @@ results = pd.DataFrame(columns=['Model', 'Accuracy'])
 def plot_conf_matrix(y_true, y_pred, title):
     cm = confusion_matrix(y_true, y_pred)
     plt.figure(figsize=(5, 4))
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=wine.target_names, yticklabels=wine.target_names)
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Oranges', xticklabels=wine.target_names, yticklabels=wine.target_names)
     plt.xlabel('Predicted')
     plt.ylabel('Actual')
     plt.title(f'Confusion Matrix: {title}')
@@ -49,3 +49,64 @@ plot_conf_matrix(y_test, y_pred_lr, "Logistic Regression")
 results.loc[len(results)] = ['Logistic Regression', accuracy_score(y_test, y_pred_lr)]
 
 # Add other models (Decision Tree, Random Forest, etc.) similarly...
+
+# --------------------------Decission Tree----------------------------------
+
+dt = DecisionTreeClassifier()
+dt.fit(X_train, y_train)
+
+y_pred_dt = dt.predict(X_test)
+
+# --------------------------Random Forest-----------------------------------
+
+rf = RandomForestClassifier()
+rf.fit(X_train, y_train)
+
+y_pred_rf = rf.predict(X_test)
+
+# --------------------------KN------------------------------------------------
+
+kn = KNeighborsClassifier()
+kn.fit(X_train, y_train)
+
+y_pred_kn = kn.predict(X_test)
+
+# -------------------------Naive Bayes--------------------------------------
+
+gb = GaussianNB()
+gb.fit(X_train, y_train)
+
+y_pred_gb = gb.predict(X_test)
+
+
+# mb = MultinomialNB()
+# mb.fit(X_train, y_train)
+
+# y_pred_mb = mb.predict(X_test)
+
+bb = BernoulliNB()
+bb.fit(X_train, y_train)
+
+y_pred_bb = bb.predict(X_test)
+
+# --------------------------SVC------------------------------------------
+
+# poly
+# linear
+# rbf
+# sigmoid
+
+# scale
+# auto
+
+sv = SVC(kernel='rbf', C=1.0, gamma='scale')
+sv.fit(X_train, y_train)
+
+y_pred_sv = sv.predict(X_test)
+
+# --------------------------------------------------------------------------
+
+
+# --------------------------------------------------------------------------
+
+# --------------------------------------------------------------------------
