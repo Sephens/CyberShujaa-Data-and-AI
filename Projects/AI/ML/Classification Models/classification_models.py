@@ -14,17 +14,54 @@ from sklearn.naive_bayes import GaussianNB, MultinomialNB, BernoulliNB
 from sklearn.svm import SVC
 from sklearn.preprocessing import StandardScaler  # <-- ADDED FOR SCALING
 
-# Load the dataset and convert to DataFrame
+# =============== Load the dataset and convert to DataFrame =======================
 wine = load_wine()
 X = pd.DataFrame(wine.data, columns=wine.feature_names)
 y = pd.Series(wine.target, name='target')
+
+# Verify dataset shape and classes
+print("=== Dataset Verification ===")
+print(f"Features shape: {X.shape}")  
+print(f"Target shape: {y.shape}")     
+print(f"Class distribution:\n{y.value_counts()}")
+print(f"Feature names:\n{wine.feature_names}")
+
+# ============================ Exploratory Data Analysis (EDA) =====================
+# Class distribution
+sns.countplot(x=y)
+plt.title("Class Distribution")
+plt.show()
+
+# Statistical summary
+print(X.describe())
+
+# Correlation heatmap
+plt.figure(figsize=(12,8))
+sns.heatmap(X.corr(), annot=True, cmap='coolwarm')
+plt.title("Feature Correlation")
+plt.show()
+
+# ===================== Data Preparation =========================================
+# Check missing values
+print("Missing values:\n", X.isnull().sum())
 
 # Scale the features (critical for models like Logistic Regression/SVM)
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)  # <-- DEFINE X_scaled HERE
 
+
+
 # Train/Test split (now using X_scaled)
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.3, random_state=42)
+
+# Verify train-test split
+print("\nTest set class counts:\n", y_test.value_counts())
+
+# Verify split sizes
+print("\n=== Train-Test Split Verification ===")
+print(f"Training set: {X_train.shape[0]} samples")
+print(f"Test set: {X_test.shape[0]} samples")
+
 
 # DataFrame to store results
 results = pd.DataFrame(columns=['Model', 'Accuracy'])
