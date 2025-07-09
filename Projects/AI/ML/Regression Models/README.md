@@ -1,5 +1,5 @@
 
-## **1. Introduction**  
+
 This project focuses on building a **Linear Regression model** using Python to predict an outcome based on a single feature. The goal is to:  
 - Explore a real-world dataset  
 - Preprocess and split data for training/testing  
@@ -11,7 +11,21 @@ The dataset used is **[Dataset Name]**, which contains **[brief description of d
 
 ---
 
-## **2. Task Completion**  
+## Table of Contents
+- [House Price Prediction Project](#house-price-prediction-project)
+  - [Project Overview](#project-overview)
+  - [Code Explanation](#code-explanation)
+    - [1. Import Libraries](#1-import-libraries)
+    - [2. Data Loading \& Exploration](#2-data-loading--exploration)
+    - [3. Data Preprocessing](#3-data-preprocessing)
+    - [4. Feature-Target Separation](#4-feature-target-separation)
+    - [5. Model Training](#5-model-training)
+    - [6. Prediction Pipeline](#6-prediction-pipeline)
+    - [7. Results Formatting \& Export](#7-results-formatting--export)
+  - [Data Preparation](#data-preparation)
+  - [Model Training](#model-training)
+  - [Prediction \& Results](#prediction--results)
+
 
 ---
 

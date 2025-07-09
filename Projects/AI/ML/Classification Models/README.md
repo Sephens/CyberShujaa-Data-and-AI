@@ -292,17 +292,14 @@ sv_linear = SVC(kernel='linear')
 ---
 
 ## Model Comparison
-This task compares the performance of all six classification models using evaluation
-metrics. Key findings include:
-- Accuracy: Random Forest and SVM typically achieve the highest scores, followed by
-Logistic Regression.
-- Precision/Recall: SVM and Random Forest show balanced precision-recall trade-offs,
+This task compares the performance of all six classification models using evaluation metrics. Key findings include:
+- **Accuracy**: Random Forest and SVM typically achieve the highest scores, followed by Logistic Regression.
+- **Precision/Recall**: SVM and Random Forest show balanced precision-recall trade-offs,
 while Naive Bayes may struggle with imbalanced classes.
-- F1-Score: Ensemble methods (Random Forest) often outperform others due to robustness against overfitting.
-- Confusion Matrix: Decision Trees and KNN may exhibit higher misclassifications in complex boundaries.
+- **F1-Score**: Ensemble methods (Random Forest) often outperform others due to robustness against overfitting.
+- **Confusion Matrix**: Decision Trees and KNN may exhibit higher misclassifications in complex boundaries.
 
-The best model is selected based on highest accuracy, balanced F1-scores, and minimal
-misclassifications, with Random Forest or SVM usually being optimal for the Wine dataset.
+The best model is selected based on highest accuracy, balanced F1-scores, and minimal misclassifications, with Random Forest or SVM usually being optimal for the Wine dataset.
 
 ```python
 print(results.sort_values(by='Accuracy', ascending=False))
