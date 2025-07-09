@@ -47,8 +47,7 @@ print("Missing values:\n", X.isnull().sum())
 
 # Scale the features (critical for models like Logistic Regression/SVM)
 scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)  # <-- DEFINE X_scaled HERE
-
+X_scaled = scaler.fit_transform(X)
 
 
 # Train/Test split (now using X_scaled)
