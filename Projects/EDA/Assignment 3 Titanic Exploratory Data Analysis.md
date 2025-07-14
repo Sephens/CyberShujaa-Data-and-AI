@@ -1,9 +1,4 @@
-# **Exploratory Data Analysis (EDA) of the Titanic Dataset**  
-**Name:** Steven Odhiambo 
-**Program:** CyberShuJaa Data and AI 
-**Date:** 5-6-2025 
 
----
 
 ## **1. Introduction**  
 The sinking of the Titanic in 1912 remains one of the most infamous maritime disasters in history. The dataset from Kaggle provides valuable insights into the passengers aboard the Titanic, including their survival status, demographics, and travel details.  
