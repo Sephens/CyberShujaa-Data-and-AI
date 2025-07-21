@@ -14,6 +14,8 @@ from sklearn.metrics import confusion_matrix
 import itertools
 import matplotlib.pyplot as plt
 
+import os.path
+
 train_labels = []
 train_samples = []
 
@@ -154,3 +156,58 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion Matrix'
 
 cm_plot_labels = ['no_side_effects', 'had_side_effects']
 plot_confusion_matrix(cm=cm, classes=cm_plot_labels, title='Confusion Matrix')
+
+#============ Saving and Loading Keras Model ===============
+# +++++++++1. Using the model.save function++++++++++++
+
+
+# check if the file exists first
+if os.path.isfile('medical_trial_model.h5') is False:
+    """The save function saves the:
+    - The architecture of the model, allowing to re-create the model
+    - The weights of the model
+    - The training config(loss, optimizer)
+    - The state of the optimizer, allowing to resume training exactly where you left off.
+    """
+    model.save('medical_trial_model.h5')
+
+# load the model
+from tensorflow.keras.models import load_model
+new_model = load_model('medical_trial_model.h5')
+new_model.summary()
+
+# you can compare the weights with the our previous model
+# new_model.get_weights()
+
+# check for the optimizer
+# new_model.optimizer()
+
+# +++++++++2. Saving the model using the model.to_json()++++++++
+"""
+If you only need to save the architecture of a model, and not its weights or its training configurations.
+"""
+
+json_string = model.to_json()
+print(json_string)
+
+# model reconstruction from JSON
+from tensorflow.keras.models import model_from_json
+model_architecture = model_from_json(json_string)
+model_architecture.summary()
+
+# ++++++++++ 3. Saving the model using the model.to_yaml++++++++
+yaml_string = model.to_yaml()
+
+# model reconstruction from YAML
+from tensorflow.keras.models import model_from_yaml
+model = model_from_yaml(yaml_string)
+model_architecture.summary()
+
+
+# saving the model weights only using model.save_weights()
+model.save_weights('medical_trial_model_weights.h5')
+
+# load the weights and use them in a new model
+# if os.path.isfile('medical_trial_model.h5') is False:
+#     model2.load_weights('medical_trial_model_weights.h5')
+
