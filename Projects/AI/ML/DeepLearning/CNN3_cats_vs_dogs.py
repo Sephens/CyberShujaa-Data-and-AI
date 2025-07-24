@@ -11,7 +11,7 @@ from keras.optimizers import Adam
 from keras.models import Sequential
 from sklearn.metrics import confusion_matrix
 from keras.layers import Dense, Flatten, Conv2D, MaxPool2D
-# from keras.preprocessing.image import ImageDataGenerator
+from keras.preprocessing.image import ImageDataGenerator
 
 #=============== Data Preparartion =====================
 path = os.getcwd()+'/data/dogsvscats' #used to get current directory
@@ -147,4 +147,37 @@ def plot_confusion_matrix(cm, classes,
 
 cm_plot_labels = ['cat', 'dog']
 plot_confusion_matrix(cm=cm_plot_labels, title='Confusion Matrix')
+
+#===============Fine tunning our model using VGG16================
+params = count_params(vgg16_model)
+assert params['non_trainable_params'] == 0
+assert params['trainable_params'] == 138357544
+
+for layer in model.layers:
+    layer.trainable = False
+
+model.add(Dense(2, activation='softmax'))
+
+model.summary()
+
+#=============Train the fine-tuned VGG16 model ============
+
+model.compile(Adam(learning_rate=0.0001), loss='categorical_crossentropy', metrics='accuracy')
+
+model.fit(x=train_batches, validation_data=valid_batches, epochs=5, verbose=2)
+
+#=========== Predict using the fine-tuned VGG16 model ========
+predictions = model.predict(test_batches, verbose=0)
+
+test_batches.classes
+
+cm = confusion_matrix(y_true=test_batches.classes,y_pred = np.argmax(predictions, axis=-1))
+
+test_batches.class_indices
+
+test_imgs, test_labels = next(test_batches)
+plotImages(test_imgs,test_labels)
+
+cm_plot_labels = ['cat','dog']
+plot_confusion_matrix(cm, cm_plot_labels, title='Confusion Matrix')
 
