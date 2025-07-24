@@ -149,9 +149,26 @@ cm_plot_labels = ['cat', 'dog']
 plot_confusion_matrix(cm=cm_plot_labels, title='Confusion Matrix')
 
 #===============Fine tunning our model using VGG16================
+
+vgg16_model = keras.applications.vgg16.VGG16()
+
+vgg16_model.summary()
+
+def count_params(model):
+    non_trainable_params = np.sum([np.prod(v.get_shape().as_list())
+                                    for v in model.non_trainable_weights])
+    trainable_params = np.sum([np.prod(v.get_shape().as_list()) 
+                                    for v in model.trainable_weights])
+    print(non_trainable_params,trainable_params)
+    return {'non_trainable_params': non_trainable_params,'trainable_params': trainable_params}
+
 params = count_params(vgg16_model)
 assert params['non_trainable_params'] == 0
 assert params['trainable_params'] == 138357544
+
+model = Sequential()
+for layer in vgg16_model.layers[:-1]:
+    model.add(layer)
 
 for layer in model.layers:
     layer.trainable = False
@@ -159,6 +176,10 @@ for layer in model.layers:
 model.add(Dense(2, activation='softmax'))
 
 model.summary()
+
+params = count_params(vgg16_model)
+assert params['non_trainable_params'] == 134260544
+assert params['trainable_params'] == 4097000
 
 #=============Train the fine-tuned VGG16 model ============
 
@@ -171,6 +192,8 @@ predictions = model.predict(test_batches, verbose=0)
 
 test_batches.classes
 
+
+#================ Visualize the Predictions of Fined-tuned VGG16 nodel ==============
 cm = confusion_matrix(y_true=test_batches.classes,y_pred = np.argmax(predictions, axis=-1))
 
 test_batches.class_indices
@@ -181,3 +204,8 @@ plotImages(test_imgs,test_labels)
 cm_plot_labels = ['cat','dog']
 plot_confusion_matrix(cm, cm_plot_labels, title='Confusion Matrix')
 
+
+# =================== Saving the Model =========
+
+if os.path.isfile('vgg16_catvsdog.h5') is False:
+    model.save('vgg16_catvsdog.h5')
